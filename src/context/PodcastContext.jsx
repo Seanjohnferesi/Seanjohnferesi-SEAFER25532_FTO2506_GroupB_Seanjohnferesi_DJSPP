@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { filterPodcasts } from "../utils/filterPodcasts.js";
 import { sortPodcasts } from "../utils/sortPodcast.js";
 import { searchPodcast } from "../utils/search.js";
@@ -22,8 +22,9 @@ export function Podcast({ children }) {
     const [searchInput, setSearchInput] = useState("");
     const [seasons, setSeasons] = useState([]);
     const [selectedSeason, setSelectedSeason] = useState(0);
+    const [dark, setDark] = useState(false);
 
-    // These need to be inside the component
+
     const filtered = filterPodcasts(podcasts, selectedGenre, genres, getGenreTitle);
     const sortedItems = sortPodcasts(filtered, sort);
     const searchFiltered = searchPodcast(sortedItems, searchInput);
@@ -53,7 +54,9 @@ export function Podcast({ children }) {
             seasons,
             setSeasons,
             selectedSeason,
-            setSelectedSeason
+            setSelectedSeason,
+            dark,
+            setDark
         }}>
             {children}
         </PodcastContext.Provider>
