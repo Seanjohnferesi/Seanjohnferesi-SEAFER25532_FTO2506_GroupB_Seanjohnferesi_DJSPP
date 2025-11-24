@@ -21,6 +21,7 @@ body{
     --color-btn: #2F719D;
     --color-backdrop: #00000054;
     --color-fade-text : rgba(0,0,0,0.4);
+    --color-headings : black;
 }
 
 @layer DarkMode{
@@ -32,8 +33,8 @@ body{
     --color-text: #FFFFFF;            /* full white for high contrast */
     --color-content-text: rgba(255, 255, 255, 0.88);  /* smooth readable white */
     --color-btn: #4FA3D1;             /* lighter blue for contrast on dark */
-    --color-backdrop: #0000008a;      /* darker modal backdrop */
-    --color-fade-text: rgba(255, 255, 255, 0.45);
+    --color-fade-text: rgba(255, 255, 255, 0.719);
+    --color-headings: var(--color-text)
     }
 }
 
@@ -54,7 +55,8 @@ body{
     .filter > h2{
         font-size: 20px;
         margin: 0;
-        font-weight: 500
+        font-weight: 500;
+        color: var(--color-headings);
     }
 
     .filter > select{

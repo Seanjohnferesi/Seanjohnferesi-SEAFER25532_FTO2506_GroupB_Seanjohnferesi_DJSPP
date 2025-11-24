@@ -83,6 +83,10 @@
         margin: 10px 0 0 0;
         color: var(--color-content-text);
     }
+
+    .pod-details > h1{
+        color: var(--color-headings);
+    }
 }
 
 @layer MetaData {
@@ -90,7 +94,7 @@
         margin: 20px 0 0 0;
         font-weight: 500;
         font-size: 17px;
-        color: rgba(0, 0, 0, 0.4);
+        color:var(--color-fade-text);
     }
 
     .genre-date {
@@ -144,7 +148,7 @@
     .total-seasons > p:nth-last-of-type(2), 
     .total-episodes > p:nth-last-of-type(2),
     .date-details > p:nth-last-of-type(2){
-        color: rgba(0, 0, 0, 0.4);
+        color: var(--color-fade-text);
         font-weight: 500;
         margin: 0;
         margin-top: 20px;
@@ -156,6 +160,7 @@
         font-weight: 500;
         margin: 0;
         margin: 5px 0 10px;
+        color: var(--color-content-text);
     }
 }
 
@@ -172,10 +177,12 @@
         border: 1px solid var(--color-border);
         border-radius: 4px;
         padding: 4px 6px 4px 6px;
+        color: var(--color-headings);
     }
 
     .title-dropdown > h2{
         font-weight: 500;
+        color: var(--color-headings);
     }
 
     .season-list-container {
@@ -218,6 +225,7 @@
     .season-title {
         margin: 0;
         font-weight: 500;
+        color: var(--color-headings);
     }
 
     .season-details{
@@ -274,6 +282,7 @@
     .episode-title {
         margin: 0;
         margin-bottom: 5px;
+        color: var(--color-headings);
         font-weight: 500;
     }
 

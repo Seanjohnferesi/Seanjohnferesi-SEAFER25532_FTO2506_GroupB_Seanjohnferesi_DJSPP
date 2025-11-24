@@ -32,13 +32,13 @@
     margin: 5px 0;
     font-weight: 500;
     font-size: 1.2rem;
-
+    color: var(--color-headings);
     display: -webkit-box;
-    /* remove line */
+ 
     -webkit-box-orient: vertical;  
     overflow: hidden;              
     text-overflow: ellipsis;
-    -webkit-line-clamp: 1;         
+    -webkit-line-clamp: 1; /* remove line clamp */
     transition: transform .5s ease;
 }
 
