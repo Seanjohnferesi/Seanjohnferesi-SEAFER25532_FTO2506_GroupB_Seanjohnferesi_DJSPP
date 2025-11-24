@@ -23,8 +23,27 @@ body{
     --color-fade-text : rgba(0,0,0,0.4);
 }
 
+@layer DarkMode{
+    body.dark{
+    --color-bg: #0F1A20;              /* deep navy charcoal */
+    --color-header: #1E3A4A;          /* darker version of your header blue */
+    --color-div-bg: var(--color-header);
+    --color-border: #34444E;          /* subtle cool border */
+    --color-text: #FFFFFF;            /* full white for high contrast */
+    --color-content-text: rgba(255, 255, 255, 0.88);  /* smooth readable white */
+    --color-btn: #4FA3D1;             /* lighter blue for contrast on dark */
+    --color-backdrop: #0000008a;      /* darker modal backdrop */
+    --color-fade-text: rgba(255, 255, 255, 0.45);
+    }
+}
+
 
 @layer Filter{
+    .filter-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     .filter{
         display: flex;
         align-items: center;
