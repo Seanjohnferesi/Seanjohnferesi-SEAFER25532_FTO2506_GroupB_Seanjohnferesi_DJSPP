@@ -20,7 +20,7 @@
 }
 
 .carousel-card {
-    flex: 0 0 250px;         /* consistent card width, no stretching */
+    flex: 0 0 280px;         /* consistent card width, no stretching */
     border: 1px solid var(--color-border);
     border-radius: 10px;
     background-color: var(--color-div-bg);
@@ -68,7 +68,7 @@
     color: var(--color-text);
 }
 
-.genre-wrapper{
+.show-genre{
     display: flex;
     flex-wrap: wrap;
     gap: 3px;

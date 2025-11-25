@@ -39,12 +39,14 @@ export default function Carousel({}) {
                                     </div>
                         
                                     <h2 className="pod-title">{podcast.title}</h2>
+                                    <div className="show-genre" >
                                 {showGenres.map((gen, index) => (   
-                                    <div className="genre-wrapper" key={index}>
-                                            <div className="genre-item" >
+                                    
+                                            <div className="genre-item" key={index} >
                                                 {gen}
-                                            </div>
-                                    </div>))}
+                                           
+                                    </div>))} 
+                                    </div>
                             </div>
                         )
                     })}
