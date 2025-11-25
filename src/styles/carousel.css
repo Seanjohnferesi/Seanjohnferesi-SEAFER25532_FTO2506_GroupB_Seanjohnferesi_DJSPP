@@ -74,3 +74,21 @@
     gap: 3px;
     margin-top: 5px;
 }
+
+.rightBtn, .leftBtn{
+    border: none;
+    padding: 5px 10px;
+    background-color: var(--color-btn);
+    border-radius: 8px;
+    font-size: 1.5rem;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+/* .rightBtn:hover, .leftBtn:hover{
+    transform: scale(1.1);
+} */
+
+.leftBtn{
+    transform: rotate(180deg);
+}
