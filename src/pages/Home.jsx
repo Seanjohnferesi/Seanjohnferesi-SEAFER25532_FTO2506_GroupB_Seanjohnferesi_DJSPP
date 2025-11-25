@@ -15,6 +15,7 @@ import PodcastCard from "../components/PodcastCard";
 import PodcastModal from "../components/PodcastModal";
 import Pagination from "../components/Pagination";
 import LoadingState from "../components/LoadingState";
+import Navigation from "../components/Navigation"
 
 // Styles
 import "../styles/Home.css";
@@ -73,6 +74,7 @@ const fetchPodcasts = useCallback(async (signal) => {
     return (
         <main className="app-root">
                 <Header />
+                <Navigation />
                 <Filter/>
 
                 <section className="podcast-grid">
