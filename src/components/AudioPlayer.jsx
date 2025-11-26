@@ -1,35 +1,30 @@
 import { usePodcast } from "../context/PodcastContext.jsx";
 import "../styles/AudioPlayer.css";
-import song from "../assets/song.mp3"
-import song2 from "../assets/song2.mp3"
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBackwardStep, faForwardStep, faPlay, faPause } from "@fortawesome/free-solid-svg-icons"
-import { useRef, useState, useEffect } from "react";
 
 
 const AudioPlayer = () => {
-    const musicPlayer = useRef(null)
-    const [currentTime, setCurrenTime] = useState(0)
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-    const [duration, setDuration] = useState(0)
-    const tracks = [song, song2]
-
-    const handlePlay = () => {
-        if(!musicPlayer.current) return 
-
-        if (isPlaying) {
-            musicPlayer.current.pause()
-            setIsPlaying(false)
-        } else {
-            musicPlayer.current.play()
-            setIsPlaying(true)
-        }
-    }
+    const {
+        musicPlayer,
+        isPlaying,
+        setIsPlaying,
+        currentTrackIndex,
+        setCurrentTrackIndex,
+        currentTime,
+        setCurrentTime,
+        duration,
+        setDuration,
+        tracks,
+        handlePlay,
+        handleNext,
+        handlePrev
+    } = usePodcast()
 
     const handleTimeUpdate = () => {
         if (musicPlayer.current) {
-            setCurrenTime(musicPlayer.current.currentTime);
+            setCurrentTime(musicPlayer.current.currentTime);
         }
     }
 
@@ -44,27 +39,6 @@ const AudioPlayer = () => {
             setDuration(musicPlayer.current.duration)
         }
     }
-
-    const handleNext = () => {
-        setCurrentTrackIndex( (prev) => (prev + 1) % tracks.length)
-    }
-
-    const handlePrev = () => {
-    setCurrentTrackIndex((prev) => 
-        (prev - 1 + tracks.length) % tracks.length
-    );
-};
-
-useEffect(() => {
-    if (!musicPlayer.current) return;
-
-    musicPlayer.current.load(); // ensure metadata updates
-
-    if (isPlaying) {
-        musicPlayer.current.play();
-    }
-}, [currentTrackIndex]);
-
 
     return (
        <section className="audio-player-container">
@@ -112,7 +86,7 @@ useEffect(() => {
                         onChange={(e) => {
                             const newTime = Number(e.target.value)
                             musicPlayer.current.currentTime = newTime;
-                            setCurrenTime(newTime);
+                            setCurrentTime(newTime);
                         }}
                     />
                     <span>{formatTime(currentTime)}</span>
