@@ -2,10 +2,27 @@ import { usePodcast } from "../context/PodcastContext.jsx";
 import "../styles/AudioPlayer.css";
 import song from "../assets/song.mp3"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBackwardStep, faForwardStep, faPlay } from "@fortawesome/free-solid-svg-icons"
+import { faBackwardStep, faForwardStep, faPlay, faPause } from "@fortawesome/free-solid-svg-icons"
+import { useRef, useState } from "react";
 
 
-const AudioPlayerShell = () => {
+const AudioPlayer = () => {
+    const musicPlayer = useRef(null)
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
+    const [isPlaying, setIsPlaying] = useState(false)
+
+
+    const handlePlay = () => {
+        if(!musicPlayer.current) return 
+
+        if (isPlaying) {
+            musicPlayer.current.pause()
+            setIsPlaying(false)
+        } else {
+            musicPlayer.current.play()
+            setIsPlaying(true)
+        }
+    }
 
     return (
        <section className="audio-player-container">
@@ -25,8 +42,8 @@ const AudioPlayerShell = () => {
                                 <FontAwesomeIcon icon={faBackwardStep} />
                             </button>
 
-                            <button className="pause-play">
-                                <FontAwesomeIcon icon={faPlay} />                               
+                            <button className="pause-play" onClick={handlePlay}>
+                                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />                               
                             </button>
 
                             <button className="next-btn">
@@ -34,10 +51,8 @@ const AudioPlayerShell = () => {
                             </button>
                         </div>
                         
-                        <div className="player">
-                            <audio >
-                                <source src={song} />
-                            </audio>
+                        <div className="player" >
+                            <audio ref={musicPlayer} src={song} ></audio>
 
                             <input
                                 type="range" 
@@ -54,4 +69,4 @@ const AudioPlayerShell = () => {
     );
 };
 
-export default AudioPlayerShell;
+export default AudioPlayer;
