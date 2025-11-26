@@ -22,8 +22,14 @@ export function Podcast({ children }) {
     const [searchInput, setSearchInput] = useState("");
     const [seasons, setSeasons] = useState([]);
     const [selectedSeason, setSelectedSeason] = useState(0);
-    const [dark, setDark] = useState(false);
-
+    const [dark, setDark] = useState(() => {
+        const saved = localStorage.getItem("darkMode")
+        return saved === "true";
+    });
+    useEffect(() => {
+        document.body.classList.toggle("dark", dark)
+        localStorage.setItem("darkMode", dark);
+    }, [dark])
 
     const filtered = filterPodcasts(podcasts, selectedGenre, genres, getGenreTitle);
     const sortedItems = sortPodcasts(filtered, sort);
