@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 
 const AudioPlayer = () => {
     const musicPlayer = useRef(null)
-    const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
+    const [currentTime, setCurrenTime] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
 
 
@@ -22,6 +22,18 @@ const AudioPlayer = () => {
             musicPlayer.current.play()
             setIsPlaying(true)
         }
+    }
+
+    const handleTimeUpdate = () => {
+        if (musicPlayer.current) {
+            setCurrenTime(musicPlayer.current.currentTime);
+        }
+    }
+
+    const formatTime = (time) => {
+        const mintues = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${mintues}: ${seconds < 10 ? "0" : ""}${seconds}`;
     }
 
     return (
@@ -52,12 +64,22 @@ const AudioPlayer = () => {
                         </div>
                         
                         <div className="player" >
-                            <audio ref={musicPlayer} src={song} ></audio>
-
-                            <input
-                                type="range" 
-                                name="audio tracker"
-                            />
+                            <audio 
+                                ref={musicPlayer} 
+                                src={song} 
+                                preload="auto"
+                                onTimeUpdate={handleTimeUpdate}
+                            ></audio>
+                                
+                            
+                            <div className="time-tracker">
+                                <input
+                                    type="range" 
+                                    name="audio tracker"
+                                />
+                                <p>{formatTime(currentTime)}</p>
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
