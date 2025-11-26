@@ -16,7 +16,7 @@ export default function Carousel() {
         if (!container) return;
 
         if (container.scrollLeft + container.clientWidth >= container.scrollWidth - cardWidth) {
-            // reached end → go back to start
+            
             container.scrollTo({ left: 0, behavior: "smooth" });
         } else {
             container.scrollBy({ left: cardWidth, behavior: "smooth" });
@@ -28,7 +28,7 @@ export default function Carousel() {
         if (!container) return;
 
         if (container.scrollLeft <= 0) {
-        
+    
             container.scrollTo({ left: container.scrollWidth, behavior: "smooth" });
         } else {
             container.scrollBy({ left: -cardWidth, behavior: "smooth" });
@@ -36,7 +36,7 @@ export default function Carousel() {
     }
 
     return (
-        <section className="Carousel">
+        <section className="carousel">
             <h2>Recommended Shows</h2>
 
             <div className="carousel-container">

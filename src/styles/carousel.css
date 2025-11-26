@@ -1,3 +1,7 @@
+.carousel > h2 {
+    color: var(--color-headings)
+}
+
 .carousel-container {
     display: flex;
     align-items: center;
