@@ -15,11 +15,12 @@ export default function DarkMode() {
         <label 
             className="switch"
         >
-            <input type="checkbox" checked={dark} />
-            <span 
-                className="slider"
-                onClick={() => toggleTheme()}
-            ></span>
+            <input 
+                type="checkbox" 
+                checked={dark}
+                onChange={toggleTheme}
+            />
+            <span  className="slider"></span>
         </label>
     )
 }
