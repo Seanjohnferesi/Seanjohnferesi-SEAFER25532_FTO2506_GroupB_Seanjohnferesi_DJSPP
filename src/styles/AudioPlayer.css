@@ -66,12 +66,21 @@
 }
 
 @layer Player{
+    .controls{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .buttons{
+        display: flex;
+    }
+
     .player {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        flex: 1;
     }
     .time-tracker{
         display: flex;
@@ -110,9 +119,6 @@
         cursor: pointer;
     }
 
-    .time-tracker > p{
-        margin: 0;
-    }
-
+    
 }
 

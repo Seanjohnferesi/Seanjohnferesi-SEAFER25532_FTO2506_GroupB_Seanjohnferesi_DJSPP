@@ -1,16 +1,19 @@
 import { usePodcast } from "../context/PodcastContext.jsx";
 import "../styles/AudioPlayer.css";
 import song from "../assets/song.mp3"
+import song2 from "../assets/song2.mp3"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBackwardStep, faForwardStep, faPlay, faPause } from "@fortawesome/free-solid-svg-icons"
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 
 const AudioPlayer = () => {
     const musicPlayer = useRef(null)
     const [currentTime, setCurrenTime] = useState(0)
     const [isPlaying, setIsPlaying] = useState(false)
-
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
+    const [duration, setDuration] = useState(0)
+    const tracks = [song, song2]
 
     const handlePlay = () => {
         if(!musicPlayer.current) return 
@@ -36,6 +39,33 @@ const AudioPlayer = () => {
         return `${mintues}: ${seconds < 10 ? "0" : ""}${seconds}`;
     }
 
+    const handleDuration = () => {
+        if(musicPlayer.current) {
+            setDuration(musicPlayer.current.duration)
+        }
+    }
+
+    const handleNext = () => {
+        setCurrentTrackIndex( (prev) => (prev + 1) % tracks.length)
+    }
+
+    const handlePrev = () => {
+    setCurrentTrackIndex((prev) => 
+        (prev - 1 + tracks.length) % tracks.length
+    );
+};
+
+useEffect(() => {
+    if (!musicPlayer.current) return;
+
+    musicPlayer.current.load(); // ensure metadata updates
+
+    if (isPlaying) {
+        musicPlayer.current.play();
+    }
+}, [currentTrackIndex]);
+
+
     return (
        <section className="audio-player-container">
             <div className="contents">
@@ -45,44 +75,49 @@ const AudioPlayer = () => {
                         <p>Episode 1: Fear</p>
                         <p>Fear</p>
                     </div>
-                </div>
 
-                <div className="controls-container">
-                    <div className="controls">
-                        <div className="buttons">
-                            <button className="prev-btn">
-                                <FontAwesomeIcon icon={faBackwardStep} />
-                            </button>
-
-                            <button className="pause-play" onClick={handlePlay}>
-                                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />                               
-                            </button>
-
-                            <button className="next-btn">
-                                <FontAwesomeIcon icon={faForwardStep} />
-                            </button>
-                        </div>
-                        
-                        <div className="player" >
-                            <audio 
-                                ref={musicPlayer} 
-                                src={song} 
-                                preload="auto"
-                                onTimeUpdate={handleTimeUpdate}
-                            ></audio>
-                                
-                            
-                            <div className="time-tracker">
-                                <input
-                                    type="range" 
-                                    name="audio tracker"
-                                />
-                                <p>{formatTime(currentTime)}</p>
-                            </div>
-                            
-                        </div>
+                    <div className="player" >
+                        <audio 
+                            ref={musicPlayer} 
+                            src={tracks[currentTrackIndex]} 
+                            preload="auto"
+                            onTimeUpdate={handleTimeUpdate}
+                            onLoadedMetadata={handleDuration}
+                        ></audio>
                     </div>
                 </div>
+
+                <div className="buttons">
+                    <button className="prev-btn" onClick={handlePrev}>
+                        <FontAwesomeIcon icon={faBackwardStep} />
+                    </button>
+
+                    <button className="pause-play" onClick={handlePlay}>
+                        <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />                               
+                    </button>
+
+                    <button className="next-btn" onClick={handleNext}>
+                        <FontAwesomeIcon icon={faForwardStep} />
+                    </button>
+                </div>
+
+                
+                <div className="time-tracker">
+                    <input
+                        type="range" 
+                        name="audio tracker"
+                        min="0"
+                        max={duration}
+                        value={currentTime}
+                        onChange={(e) => {
+                            const newTime = Number(e.target.value)
+                            musicPlayer.current.currentTime = newTime;
+                            setCurrenTime(newTime);
+                        }}
+                    />
+                    <span>{formatTime(currentTime)}</span>
+                </div>
+              
                 <div>
 
                 </div>
