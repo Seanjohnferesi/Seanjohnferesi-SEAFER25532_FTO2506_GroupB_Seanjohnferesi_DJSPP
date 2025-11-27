@@ -211,7 +211,8 @@ export default function ShowDetail() {
                                                     ...ep,
                                                     season: selectedSeason,
                                                     episodeIndex: index,
-                                                    image: ep.image
+                                                    image: ep.image,
+                                                    
                                                 });
                                                 }}
                                             />

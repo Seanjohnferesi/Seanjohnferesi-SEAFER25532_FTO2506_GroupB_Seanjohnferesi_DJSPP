@@ -30,16 +30,25 @@ export function Podcast({ children }) {
 
     const toggleFavourite = (episode) => {
     setFavourites(prev => {
+        // Check if this episode is already in favourites
         const exists = prev.find(
             item => item.season === episode.season && item.episodeIndex === episode.episodeIndex
         );
 
         if (exists) {
+            // If it exists, remove it from favourites
             return prev.filter(
                 item => !(item.season === episode.season && item.episodeIndex === episode.episodeIndex)
             );
         } else {
-            return [...prev, episode];
+            // If it doesn’t exist, add it to favourites with the current date/time
+            return [
+                ...prev, 
+                {
+                    ...episode,
+                    addedDate: new Date().toLocaleString() // stores current date & time
+                }
+            ];
         }
     });
 };
