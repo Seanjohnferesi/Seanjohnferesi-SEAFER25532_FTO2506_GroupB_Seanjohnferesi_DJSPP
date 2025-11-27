@@ -3,11 +3,13 @@ import { useRef } from "react";
 import "../styles/carousel.css"
 import { genres } from "../data.js";
 import { getGenreTitle } from "../utils/getGenreTitle.js"
+import { useNavigate } from "react-router-dom";
 
 export default function Carousel() {
     const { podcasts } = usePodcast();
     const items = podcasts.slice(3, 14);
     const carouselRef = useRef(null);
+    const navigate = useNavigate()
 
     const cardWidth = 280 + 20; // card width + gap
 
@@ -50,7 +52,11 @@ export default function Carousel() {
                         const showGenres = getGenreTitle(podcast.id, genres);
 
                         return (
-                            <div className="carousel-card" key={podcast.id}>
+                            <div 
+                                className="carousel-card" 
+                                key={podcast.id}
+                                onClick={() => navigate(`/show/${podcast.id}`)}
+                            >
                                 <div className="carousel-img-div">
                                     <img src={podcast.image} className="carousel-pod-img" alt={podcast.title} />
                                 </div>
