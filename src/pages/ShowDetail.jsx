@@ -78,7 +78,6 @@ export default function ShowDetail() {
             setSeasons(data.seasons || []);
         } catch (err) {
             if (err.name === "AbortError") return;
-            console.error("Failed to fetch seasons:", err);
         }
     }, [show, setSeasons]);
 
@@ -187,7 +186,10 @@ export default function ShowDetail() {
                             {/* Episodes */}
                             <div className="season-list">
                                 {currentSeason?.episodes.map((ep, index) => {
-                                    const isFaved = favourites.some(item => item.id === ep.id);
+                                   const isFaved = favourites.some(
+                                        f => f.season === selectedSeason && f.episodeIndex === index
+                                    );
+                                    
 
                                     return (
                                         <div
@@ -205,7 +207,11 @@ export default function ShowDetail() {
                                                 alt="Favourite"
                                                 onClick={(e) => {
                                                 e.stopPropagation(); // prevent auto-play on heart click
-                                                toggleFavourite(ep);
+                                                toggleFavourite({
+                                                    ...ep,
+                                                    season: selectedSeason,
+                                                    episodeIndex: index
+                                                });
                                                 }}
                                             />
                                             

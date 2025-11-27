@@ -28,17 +28,22 @@ export function Podcast({ children }) {
     // --- Favourite Episode --- 
     const [favourites, setFavourites] = useState([])
 
-    const toggleFavourite = (podcast) =>{
-        setFavourites(prev => {
-            const exists = prev.find(item => item.id === podcast.id);
-            
-            if (exists) {
-                return prev.filter(item => item.id !== podcast.id);
-            } else {
-                return [...prev, podcast];
-            }
-        })
-    }
+    const toggleFavourite = (episode) => {
+    setFavourites(prev => {
+        const exists = prev.find(
+            item => item.season === episode.season && item.episodeIndex === episode.episodeIndex
+        );
+
+        if (exists) {
+            return prev.filter(
+                item => !(item.season === episode.season && item.episodeIndex === episode.episodeIndex)
+            );
+        } else {
+            return [...prev, episode];
+        }
+    });
+};
+
 
     // --- Audio player state ---
     const musicPlayer = useRef(null);

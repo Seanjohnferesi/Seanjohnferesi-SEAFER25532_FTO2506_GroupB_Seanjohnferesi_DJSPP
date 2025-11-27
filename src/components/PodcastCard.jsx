@@ -5,19 +5,19 @@ import { genres } from "../data.js";
 import { formatDate } from "../utils/formatDate.js";
 import { getGenreTitle } from "../utils/getGenreTitle.js";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { usePodcast } from "../context/PodcastContext.jsx";
+import heartOutline from "../assets/heart.png"
+import heartFilled from "../assets/heart-fill.png"
 
 export default function PodcastCard({podcast}) {
-    const{favourites,seasons} = usePodcast()
+    const{favourites,seasons, toggleFavourite} = usePodcast()
 
     const navigate = useNavigate();
     const gotToDetails = () => {
         navigate(`/show/${podcast.id}`);
     }
     const showGenres = getGenreTitle(podcast.id, genres)
-    const isFaved = favourites.some(f => f.id === episode.id)
+    const isFaved = favourites.some(f => f.id === podcast.id)
 
 
     return (    
@@ -28,14 +28,14 @@ export default function PodcastCard({podcast}) {
                     alt={podcast.title} 
                     className="podcast-img"
                 />
-                <FontAwesomeIcon 
-                    className={isFaved ? "heart-active" : "heart"} 
-                    icon={faHeart}
-                    onClick={() => { 
-                        e.stopPropagation()
-                        toggleFavourite(seasons?.episode)
-                    }
-                    }
+                <img 
+                    className="heart-icon"
+                    src={isFaved ? heartFilled: heartOutline}
+                    alt="Favourite"
+                    onClick={(e) => {
+                    e.stopPropagation(); // prevent auto-play on heart click
+                    toggleFavourite(podcast);
+                    }}
                 />
             </div>
 

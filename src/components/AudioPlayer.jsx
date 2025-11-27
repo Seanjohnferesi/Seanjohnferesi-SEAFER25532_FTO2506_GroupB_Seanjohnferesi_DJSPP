@@ -25,7 +25,6 @@ const AudioPlayer = () => {
   const currentEpisode = seasons[selectedSeason]?.episodes[currentTrackIndex];
   const currentSeasonTitle = seasons[selectedSeason]?.title;
   const currentEpisodeFile = currentEpisode?.file;
- console.log(seasons[selectedSeason])
   // Format time in mm:ss
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
