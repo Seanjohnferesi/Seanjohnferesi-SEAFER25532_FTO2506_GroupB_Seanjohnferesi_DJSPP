@@ -23,11 +23,13 @@ header{
 .header-title{
     color: var(--color-text);
     font-size: 28px;
+    cursor: pointer;
 }
 
 .icon-name-wrapper > img{
     width: 50px;
     height: 50px;
+    cursor: pointer;
 }
 
 .profile-wrapper{

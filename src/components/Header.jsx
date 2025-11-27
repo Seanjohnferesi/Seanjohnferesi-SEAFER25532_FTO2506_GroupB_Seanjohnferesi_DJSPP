@@ -4,14 +4,19 @@ import appIcon from "../assets/app-icon.png"
 import "../styles/styles.css"
 import man from "../assets/man.png"
 import { usePodcast } from "../context/PodcastContext.jsx"
+import { useNavigate } from "react-router-dom"
 
 export default function Header() {
     const {searchInput, setSearchInput, setCurrentPage} = usePodcast()
-    
+    const navigate = useNavigate()
     return (
         <header className="app-header">
             <div className="icon-name-wrapper">
-                <img src={appIcon} alt="app icon" />
+                <img 
+                    src={appIcon} 
+                    alt="app icon" 
+                    onClick={() => navigate("/")}
+                />
                 <h1 className="header-title">Forger Talks</h1>
             </div>
 
