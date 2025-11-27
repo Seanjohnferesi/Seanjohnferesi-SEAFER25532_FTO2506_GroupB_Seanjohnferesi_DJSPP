@@ -28,7 +28,9 @@ export default function ShowDetail() {
         seasons,
         setSeasons,
         selectedSeason,
-        setSelectedSeason
+        setSelectedSeason,
+        handlePlay,
+        setCurrentTrackIndex
     } = usePodcast();
 
     const show = podcasts.find(p => p.id === id);
@@ -187,7 +189,15 @@ export default function ShowDetail() {
                             {/* Episodes */}
                             <div className="season-list">
                                 {currentSeason?.episodes.map((ep,index) => (
-                                    <div className="episode-container" key={index}>
+                                    <div 
+                                        className="episode-container" 
+                                        key={index}
+                                        onClick={() => {
+                                            setSelectedSeason(selectedSeason);
+                                            setCurrentTrackIndex(index)
+                                            handlePlay();
+                                        }}
+                                    >
                                         <img src={currentSeason.image} alt={ep.title} />
                                         <div className="episode-details">
                                             <p className="episode-title">Episode {index + 1}: {ep.title}</p>
