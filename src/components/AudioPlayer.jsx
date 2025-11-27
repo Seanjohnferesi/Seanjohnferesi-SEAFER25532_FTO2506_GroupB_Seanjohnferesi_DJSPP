@@ -25,7 +25,7 @@ const AudioPlayer = () => {
   const currentEpisode = seasons[selectedSeason]?.episodes[currentTrackIndex];
   const currentSeasonTitle = seasons[selectedSeason]?.title;
   const currentEpisodeFile = currentEpisode?.file;
-
+ console.log(seasons[selectedSeason])
   // Format time in mm:ss
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -85,11 +85,13 @@ const AudioPlayer = () => {
       <div className="contents">
         {/* Episode Info */}
         <div className="audio-info">
-          <div className="audio-name">
-            <img src={currentEpisode?.image} alt="" />
-            <p>{currentEpisode?.title || "No episode selected"}</p>
-            <p>{currentSeasonTitle || ""}</p>
-          </div>
+            <div className="audio-name">
+                <img src={seasons[selectedSeason]?.image} alt={currentEpisode?.title} />
+                <div>
+                    <p>{currentEpisode?.title || "No episode selected"}</p>
+                    <p>{currentSeasonTitle || ""}</p> 
+                </div>
+            </div>
 
           {/* Audio element */}
           <div className="player">

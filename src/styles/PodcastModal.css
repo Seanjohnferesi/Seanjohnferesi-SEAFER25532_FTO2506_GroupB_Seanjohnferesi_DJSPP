@@ -266,10 +266,11 @@
        padding: 14px 18px;
        border-radius: 8px;
        box-shadow: 0 0 1px 1px var(--episode-shadow);
+       position: relative;
        cursor: pointer;
     }
 
-    .episode-container > img{
+    .episode-container > img:nth-last-of-type(1){
         width: 50px;
         height: 50px;
         border-radius: 8px;
@@ -318,6 +319,16 @@
     .episode-meta > span:nth-last-of-type(2){
         font-size: 1rem;
     }
+
+    .heart-icon{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+    }
+
 }
 
 @layer responsive {

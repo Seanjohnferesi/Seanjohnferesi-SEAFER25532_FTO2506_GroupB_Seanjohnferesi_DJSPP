@@ -25,6 +25,21 @@ export function Podcast({ children }) {
     const [selectedSeason, setSelectedSeason] = useState(0);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
+    // --- Favourite Episode --- 
+    const [favourites, setFavourites] = useState([])
+
+    const toggleFavourite = (podcast) =>{
+        setFavourites(prev => {
+            const exists = prev.find(item => item.id === podcast.id);
+            
+            if (exists) {
+                return prev.filter(item => item.id !== podcast.id);
+            } else {
+                return [...prev, podcast];
+            }
+        })
+    }
+
     // --- Audio player state ---
     const musicPlayer = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -113,7 +128,8 @@ export function Podcast({ children }) {
             duration, setDuration,
             handlePlay, handleNext, handlePrev,
             handleTimeUpdate, handleDuration, formatTime,
-            currentEpisodeFile
+            currentEpisodeFile,
+            favourites, setFavourites, toggleFavourite
         }}>
             {children}
         </PodcastContext.Provider>

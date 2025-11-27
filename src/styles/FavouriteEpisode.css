@@ -7,7 +7,15 @@
         border: 1px solid var(--color-border);
         padding: 15px 18px;
         border-radius: 8px;
+        position: relative;
     }
+
+    .fav-episode-details > div{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .fav-episode-details > div > 
 
     .fav-list {
         display: flex;

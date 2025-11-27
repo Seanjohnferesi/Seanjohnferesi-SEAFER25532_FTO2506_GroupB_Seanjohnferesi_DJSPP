@@ -6,6 +6,8 @@ import LoadingState from "../components/LoadingState";
 import { getGenreTitle } from "../utils/getGenreTitle.js";
 import { genres } from "../data.js";
 import { formatDate } from "../utils/formatDate.js";
+import heartOutline from "../assets/heart.png"
+import heartFilled from "../assets/heart-fill.png"
 
 /**
  * ShowDetail component displays detailed information about a specific podcast show,
@@ -19,18 +21,13 @@ export default function ShowDetail() {
     const navigate = useNavigate();
 
     const {
-        podcasts,
-        setPodcasts,
-        setLoading,
-        error,
-        setError,
-        loading,
-        seasons,
-        setSeasons,
-        selectedSeason,
-        setSelectedSeason,
-        handlePlay,
-        setCurrentTrackIndex
+        podcasts,setPodcasts,
+        setLoading,error,
+        setError,loading,
+        seasons,setSeasons,
+        selectedSeason,setSelectedSeason,
+        handlePlay,setCurrentTrackIndex,
+        toggleFavourite,favourites
     } = usePodcast();
 
     const show = podcasts.find(p => p.id === id);
@@ -39,6 +36,7 @@ export default function ShowDetail() {
     const lastUpdated = show ? new Date(show.updated).toLocaleDateString("en-US", {
         month: "long", day: "numeric", year: "numeric"
     }) : "";
+
 
     /**
      * Fetch main show data from the API.
@@ -188,29 +186,49 @@ export default function ShowDetail() {
 
                             {/* Episodes */}
                             <div className="season-list">
-                                {currentSeason?.episodes.map((ep,index) => (
-                                    <div 
-                                        className="episode-container" 
-                                        key={index}
-                                        onClick={() => {
-                                            setSelectedSeason(selectedSeason);
-                                            setCurrentTrackIndex(index)
-                                            handlePlay();
-                                        }}
-                                    >
-                                        <img src={currentSeason.image} alt={ep.title} />
-                                        <div className="episode-details">
-                                            <p className="episode-title">Episode {index + 1}: {ep.title}</p>
-                                            <p className="episode-desc">{ep.description}</p>
-                                            <div className="episode-meta">
-                                                <span>45 min</span>
-                                                <span>&#8226;</span>
-                                                <span>{lastUpdated}</span>
+                                {currentSeason?.episodes.map((ep, index) => {
+                                    const isFaved = favourites.some(item => item.id === ep.id);
+
+                                    return (
+                                        <div
+                                            className="episode-container"
+                                            key={index}
+                                            onClick={() => {
+                                                setSelectedSeason(selectedSeason);
+                                                setCurrentTrackIndex(index);
+                                                handlePlay();
+                                            }}
+                                        >
+                                            <img 
+                                                className="heart-icon"
+                                                src={isFaved ? heartFilled: heartOutline}
+                                                alt="Favourite"
+                                                onClick={(e) => {
+                                                e.stopPropagation(); // prevent auto-play on heart click
+                                                toggleFavourite(ep);
+                                                }}
+                                            />
+                                            
+                                            <img src={currentSeason.image} alt={ep.title} />
+
+                                            <div className="episode-details">
+                                                <p className="episode-title">
+                                                    Episode {index + 1}: {ep.title}
+                                                </p>
+                                                <p className="episode-desc">{ep.description}</p>
+
+                                                <div className="episode-meta">
+                                                    <span>45 min</span>
+                                                    <span>&#8226;</span>
+                                                    <span>{lastUpdated}</span>
+                                                    
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
+
                         </div>
                     </div>
                 </div>
