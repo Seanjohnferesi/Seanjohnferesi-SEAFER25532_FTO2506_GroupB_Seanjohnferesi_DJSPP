@@ -38,11 +38,28 @@
     flex-shrink: 0;
 }
 
-.audio-name > p {
+.audio-name > div{
+    display: flex;
+    flex-direction: column;
+}
+
+.audio-name{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.audio-name > div > p {
     margin: 0;
     color: var(--color-text);
     font-size: 0.9rem;
     line-height: 1.2;
+}
+
+.audio-name > img{
+    width: 65px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .buttons {
@@ -67,7 +84,7 @@
     padding: 8px 12px;
     background-color: var(--color-btn);
     color: var(--color-text);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.35);
 }
 
 .pause-play {
