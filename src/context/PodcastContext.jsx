@@ -4,121 +4,116 @@ import { sortPodcasts } from "../utils/sortPodcast.js";
 import { searchPodcast } from "../utils/search.js";
 import { genres } from "../data.js";
 import { getGenreTitle } from "../utils/getGenreTitle.js";
-import song from "../assets/song.mp3"
-import song2 from "../assets/song2.mp3"
-
-
 
 const PodcastContext = createContext();
-
-export const usePodcast = () => useContext(PodcastContext)
+export const usePodcast = () => useContext(PodcastContext);
 
 export function Podcast({ children }) {
+    // --- Podcast state ---
     const [podcasts, setPodcasts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedPodcast, setSelectedPodcast] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerpage = 6;
+    const itemsPerPage = 6;
     const [sort, setSort] = useState("");
-    const [selectedGenre , setSelectedGenre] = useState("");
+    const [selectedGenre, setSelectedGenre] = useState("");
     const [searchInput, setSearchInput] = useState("");
+
+    // --- Seasons & episodes ---
     const [seasons, setSeasons] = useState([]);
     const [selectedSeason, setSelectedSeason] = useState(0);
-    const musicPlayer = useRef(null)
-    const [currentTime, setCurrentTime] = useState(0)
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
-    const [duration, setDuration] = useState(0)
-    const tracks = [song, song2]
-    const [dark, setDark] = useState(() => {
-        const saved = localStorage.getItem("darkMode")
-        return saved === "true";
-    });
-    useEffect(() => {
-        document.body.classList.toggle("dark", dark)
-        localStorage.setItem("darkMode", dark);
-    }, [dark])
+    const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
+    // --- Audio player state ---
+    const musicPlayer = useRef(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+
+    // --- Dark mode ---
+    const [dark, setDark] = useState(() => localStorage.getItem("darkMode") === "true");
+    useEffect(() => {
+        document.body.classList.toggle("dark", dark);
+        localStorage.setItem("darkMode", dark);
+    }, [dark]);
+
+    // --- Filter, sort, search ---
     const filtered = filterPodcasts(podcasts, selectedGenre, genres, getGenreTitle);
     const sortedItems = sortPodcasts(filtered, sort);
     const searchFiltered = searchPodcast(sortedItems, searchInput);
     const totalItems = searchFiltered.length;
 
+    // --- Current episode file ---
+    const currentEpisodeFile = seasons[selectedSeason]?.episodes[currentTrackIndex]?.file;
+
+    // --- Audio handlers ---
     const handlePlay = () => {
-        if(!musicPlayer.current) return 
+        if (!musicPlayer.current || !currentEpisodeFile) return;
 
+        musicPlayer.current.src = currentEpisodeFile;
         if (isPlaying) {
-            musicPlayer.current.pause()
-            setIsPlaying(false)
+            musicPlayer.current.pause();
+            setIsPlaying(false);
         } else {
-            musicPlayer.current.play()
-            setIsPlaying(true)
+            musicPlayer.current.play().catch(err => console.error(err));
+            setIsPlaying(true);
         }
-    }
-
-    
+    };
 
     const handleNext = () => {
-        setCurrentTrackIndex( (prev) => (prev + 1) % tracks.length)
-    }
+        const episodes = seasons[selectedSeason]?.episodes || [];
+        setCurrentTrackIndex(prev => (prev + 1) % episodes.length);
+    };
 
     const handlePrev = () => {
-        setCurrentTrackIndex((prev) => 
-            (prev - 1 + tracks.length) % tracks.length
-        );
+        const episodes = seasons[selectedSeason]?.episodes || [];
+        setCurrentTrackIndex(prev => (prev - 1 + episodes.length) % episodes.length);
     };
 
     useEffect(() => {
-        if (!musicPlayer.current) return;
+        if (!musicPlayer.current || !currentEpisodeFile) return;
+        musicPlayer.current.src = currentEpisodeFile;
+        musicPlayer.current.load();
+        if (isPlaying) musicPlayer.current.play().catch(err => console.error(err));
+    }, [currentTrackIndex, selectedSeason]);
 
-        musicPlayer.current.load(); // ensure metadata updates
+    const handleTimeUpdate = () => {
+        if (musicPlayer.current) setCurrentTime(musicPlayer.current.currentTime);
+    };
 
-        if (isPlaying) {
-            musicPlayer.current.play();
-        }
-    }, [currentTrackIndex]);
+    const handleDuration = () => {
+        if (musicPlayer.current) setDuration(musicPlayer.current.duration);
+    };
+
+    const formatTime = (time) => {
+        const minutes = Math.floor(time / 60);
+        const seconds = Math.floor(time % 60);
+        return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    };
 
     return (
         <PodcastContext.Provider value={{
-            podcasts,
-            setPodcasts,
-            loading,
-            setLoading,
-            error,
-            setError,
-            selectedPodcast,
-            setSelectedPodcast,
-            currentPage,
-            setCurrentPage,
-            itemsPerpage,
-            searchFiltered,
-            totalItems,
-            sort,
-            setSort,
-            selectedGenre,
-            setSelectedGenre,
-            searchInput,
-            setSearchInput,
-            seasons,
-            setSeasons,
-            selectedSeason,
-            setSelectedSeason,
-            dark,
-            setDark,
-            musicPlayer,
-            isPlaying,
-            setIsPlaying,
-            currentTrackIndex,
-            setCurrentTrackIndex,
-            currentTime,
-            setCurrentTime,
-            duration,
-            setDuration,
-            tracks,
-            handlePlay,
-            handleNext,
-            handlePrev
+            podcasts, setPodcasts,
+            loading, setLoading,
+            error, setError,
+            selectedPodcast, setSelectedPodcast,
+            currentPage, setCurrentPage,
+            itemsPerPage,
+            searchFiltered, totalItems,
+            sort, setSort,
+            selectedGenre, setSelectedGenre,
+            searchInput, setSearchInput,
+            seasons, setSeasons,
+            selectedSeason, setSelectedSeason,
+            dark, setDark,
+            musicPlayer, isPlaying, setIsPlaying,
+            currentTrackIndex, setCurrentTrackIndex,
+            currentTime, setCurrentTime,
+            duration, setDuration,
+            handlePlay, handleNext, handlePrev,
+            handleTimeUpdate, handleDuration, formatTime,
+            currentEpisodeFile
         }}>
             {children}
         </PodcastContext.Provider>

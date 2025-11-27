@@ -9,13 +9,13 @@ import { fetchPodcastsAPI } from "../api/fetchPodcast.js";
 import { paginatePodcasts } from "../utils/pagination.js";
 
 // Components
-import Header from "../components/Header";
 import Filter from "../components/Filter";
 import PodcastCard from "../components/PodcastCard";
 import PodcastModal from "../components/PodcastModal";
 import Pagination from "../components/Pagination";
 import LoadingState from "../components/LoadingState";
-import Navigation from "../components/Navigation"
+import Navigator from "../components/Navigator"
+import Carousel from "../components/carousel.jsx";
 
 // Styles
 import "../styles/Home.css";
@@ -24,12 +24,12 @@ import "../styles/styles.css";
 
 export default function Home() {
     const {
-        podcasts, setPodcasts,
+        setPodcasts,
         loading, setLoading,
         error, setError,
         selectedPodcast, setSelectedPodcast,
         currentPage, setCurrentPage,
-        itemsPerpage,
+        itemsPerPage,
         searchFiltered,
     } = usePodcast()
 
@@ -39,7 +39,9 @@ const fetchPodcasts = useCallback(async (signal) => {
 
         try {
             const data = await fetchPodcastsAPI(signal);
+
             setPodcasts(data)
+           
 
         } catch (err) {
             // if fetch was aborted or cancelled, do nothing
@@ -50,6 +52,7 @@ const fetchPodcasts = useCallback(async (signal) => {
         } finally {
             setLoading(false);
         }
+        
     }, []);
     
 
@@ -66,30 +69,30 @@ const fetchPodcasts = useCallback(async (signal) => {
 
     if(loading) return <LoadingState/>
 
-
-    // PAGINATION
-    const currentPodcast = paginatePodcasts(searchFiltered, currentPage, itemsPerpage)
     
+    // PAGINATION
+    const currentPodcast = paginatePodcasts(searchFiltered, currentPage, itemsPerPage)
+
 
     return (
         <main className="app-root">
-                <Header />
-                <Navigation />
+                <Navigator />
+                <Carousel />
                 <Filter/>
 
                 <section className="podcast-grid">
-                {currentPodcast.map((podcast) => (
-                    <PodcastCard key={podcast.id} podcast={podcast} />
-                ))}
+                    {currentPodcast.map((podcast) => (
+                        <PodcastCard key={podcast.id} podcast={podcast} />
+                    ))}
                 </section>
 
                 <Pagination />
 
                 {selectedPodcast && (
-                <PodcastModal 
-                    podcast={selectedPodcast} 
-                />
-            )}
+                    <PodcastModal 
+                        podcast={selectedPodcast} 
+                    />
+                )}
         </main>
     )
 }

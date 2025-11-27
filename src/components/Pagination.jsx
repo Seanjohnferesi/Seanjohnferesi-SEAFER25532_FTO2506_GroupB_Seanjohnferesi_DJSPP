@@ -4,8 +4,8 @@ import "../styles/Pagination.css"
 import { usePodcast } from "../context/PodcastContext.jsx";
 
 export default function Pagination() {
-    const { totalItems, itemsPerpage, currentPage, setCurrentPage } = usePodcast()
-    const totalPages = Math.ceil(totalItems / itemsPerpage);
+    const { totalItems, itemsPerPage, currentPage, setCurrentPage } = usePodcast()
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const handleClick = (page) => {
         setCurrentPage(page);
