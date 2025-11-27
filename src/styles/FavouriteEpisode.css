@@ -1,72 +1,77 @@
+.favourites > h2,
+.favourites > p {
+    color: var(--color-headings);
+}
 
-    .favourites > h2, .favourites > p{
-        color: var(--color-headings)
-    }
+.fav-list-container {
+    width: 100%;
+    background-color: var(--episode-inner-shadow);
+    display: flex;
+    gap: 15px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    box-shadow: 0 0 1px 1px var(--episode-shadow);
+    position: relative;
+    cursor: pointer;
+}
 
-    .fav-list-container {
-        border: 1px solid var(--color-border);
-        padding: 15px 18px;
-        border-radius: 8px;
-        position: relative;
-    }
+.fav-episode-details > div {
+    display: flex;
+    justify-content: space-between;
+}
 
-    .fav-episode-details > div{
-        display: flex;
-        justify-content: space-between;
-    }
+.fav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-    .fav-episode-details > div > 
+.fav-ep-clm {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
 
-    .fav-list {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
+.fav-ep-clm > img {
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+}
 
-    .fav-ep-clm {
-        display: flex;
-        gap: 15px;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 10px;
-    }
+.fav-ep-title {
+    margin: 0;
+    font-weight: 500;
+    color: var(--color-headings);
+}
 
-    .fav-ep-clm > img {
-        width: 70px;
-        height: 70px;
-        border-radius: 8px;
-    }
+.fav-ep-desc {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.85rem;
+    color: var(--color-content-text);
+    font-weight: 500;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: clip;
+}
 
-    .fav-ep-title {
-        margin: 0;
-        font-weight: 500;
-        color: var(--color-headings);
-    }
+.fav-ep-meta {
+    display: flex;
+    align-items: center;
+}
 
-    .fav-ep-desc{
-        display: flex;
-        flex-direction: column;
-    }
+.fav-ep-meta > span {
+    font-size: 0.8rem;
+    color: var(--color-fade-text);
+    font-weight: 500;
+    margin-right: 10px;
+}
 
-    .fav-ep-desc {
-        font-size: .85rem;
-        color: var(--color-content-text);
-        font-weight: 500;
-        margin: 0;
-    }
-
-    .fav-ep-meta{
-        display: flex;
-        align-items: center;
-    }
-
-    .fav-ep-meta > span{
-        font-size: .8rem;
-        color: var(--color-fade-text);
-        font-weight: 500;
-        margin-right: 10px
-    }
-
-    .fav-ep-meta > span:nth-last-of-type(2){
-        font-size: 1rem;
-    }
+.fav-ep-meta > span:nth-last-of-type(2) {
+    font-size: 1rem;
+}

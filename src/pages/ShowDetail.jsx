@@ -210,7 +210,8 @@ export default function ShowDetail() {
                                                 toggleFavourite({
                                                     ...ep,
                                                     season: selectedSeason,
-                                                    episodeIndex: index
+                                                    episodeIndex: index,
+                                                    image: ep.image
                                                 });
                                                 }}
                                             />
