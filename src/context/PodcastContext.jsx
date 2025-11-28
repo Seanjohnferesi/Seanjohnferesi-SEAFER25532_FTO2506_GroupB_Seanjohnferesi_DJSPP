@@ -4,6 +4,9 @@ import { sortPodcasts } from "../utils/sortPodcast.js";
 import { searchPodcast } from "../utils/search.js";
 import { genres } from "../data.js";
 import { getGenreTitle } from "../utils/getGenreTitle.js";
+import useConfirmExitOnPlay from "../utils/confirm.js";
+
+
 
 const PodcastContext = createContext();
 export const usePodcast = () => useContext(PodcastContext);
@@ -40,8 +43,10 @@ export function Podcast({ children }) {
     const toggleFavourite = (episode) => {
     setFavourites(prev => {
         const exists = prev.find(
-            item => item.season === episode.season && item.episodeIndex === episode.episodeIndex
-        );
+            item => item.podcastId === episode.podcastId &&
+                    item.season === episode.season &&
+                    item.episodeIndex === episode.episodeIndex
+        );      
 
         let newFavourites;
 
@@ -72,6 +77,9 @@ export function Podcast({ children }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+
+    useConfirmExitOnPlay(isPlaying);
+
 
     // --- Dark mode ---
     const [dark, setDark] = useState(() => localStorage.getItem("darkMode") === "true");

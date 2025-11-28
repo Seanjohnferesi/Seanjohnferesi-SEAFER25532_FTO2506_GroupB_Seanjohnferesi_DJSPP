@@ -5,7 +5,7 @@ import heartOutline from "../../assets/heart.png";
 
 export default function FavouriteEpisode() {
     const { favourites, seasons, toggleFavourite, handlePlay, podcasts, selectedPodcast} = usePodcast();
-     const podcastTitle = podcasts[selectedPodcast]?.title || "Unknown Podcast";
+    const podcastTitle = podcasts[selectedPodcast]?.title || "Unknown Podcast";
     return (
         <section className="fav-list-container">
             <h2>{podcastTitle}</h2>
@@ -22,14 +22,15 @@ export default function FavouriteEpisode() {
                         f => f.season === fav.season && f.episodeIndex === fav.episodeIndex
                     );
 
+
                     return (
                         
                     <div 
                         className="wrapper"
                         key={index}
-                        onClick={() => handlePlay()}
+                        onClick={() => handlePlay(episode.file)}
                     >
-                        <div className="fav-ep-clm" key={index}>
+                        <div className="fav-ep-clm">
                             <img 
                                 className="episode-image"
                                 src={episode.image || season?.image} 
