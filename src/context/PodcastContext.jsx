@@ -67,6 +67,9 @@ export function Podcast({ children }) {
                 {
                     ...episode,
                     podcastId: episode.podcastId,
+                    podcastTitle: episode.podcastTitle,
+                    image: episode.image,
+                    seasonImage: episode.seasonImage || episode.image,
                     addedDate: new Date().toLocaleString()
                 }
             ];

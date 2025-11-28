@@ -7,17 +7,15 @@ import LoadingState from "../LoadingState";
 export default function FavouriteEpisode() {
   const {
     favourites,
-    seasons,
     toggleFavourite,
     handlePlay,
-    setSelectedSeason,
-    setCurrentTrackIndex,
-    podcasts
+    setEpisode,
+    podcast
   } = usePodcast();
+console.log(favourites)
+  if (!favourites) return <LoadingState />;
+  if (favourites.length === 0) return <p>No favourites yet.</p>;
 
-    if(!favourites) return <LoadingState />
-    if (!favourites || favourites.length === 0) return <p>No favourites yet.</p>;
-    
   // Group favourites by podcast
   const favouritesByPodcast = favourites.reduce((acc, fav) => {
     const podcastId = fav.podcastId || "unknown";
@@ -29,7 +27,6 @@ export default function FavouriteEpisode() {
   return (
     <section className="fav-list-container">
       {Object.entries(favouritesByPodcast).map(([podcastId, favs]) => {
-        const podcast = podcasts.find(p => p.id === podcastId);
         const podcastTitle = podcast?.title || "Unknown Podcast";
 
         return (
@@ -37,10 +34,6 @@ export default function FavouriteEpisode() {
             <h2>{podcastTitle}</h2>
             <div className="fav-list">
               {favs.map((fav, index) => {
-                const season = seasons[fav.season];
-                const episode = season?.episodes[fav.episodeIndex];
-                if (!episode) return null;
-
                 const isFaved = favourites.some(
                   f =>
                     f.podcastId === fav.podcastId &&
@@ -48,15 +41,12 @@ export default function FavouriteEpisode() {
                     f.episodeIndex === fav.episodeIndex
                 );
 
-                // Play this episode when clicked
                 const playEpisode = () => {
-                  setSelectedSeason(fav.season);
-                  setCurrentTrackIndex(fav.episodeIndex);
-                  handlePlay();
+                  setEpisode(fav.podcastId, fav.season, fav.episodeIndex);
+                  handlePlay(); // now plays the correct episode
                 };
 
                 return (
-                     
                   <div
                     className="fav-ep-clm"
                     key={index}
@@ -64,13 +54,13 @@ export default function FavouriteEpisode() {
                   >
                     <img
                       className="episode-image"
-                      src={episode.image || season?.image}
-                      alt={episode.title}
+                      src={fav.image}
+                      alt={fav.title}
                     />
                     <div className="fav-episode-details">
                       <div className="fav-title-heart">
                         <p className="fav-ep-title">
-                          Episode {episode.episode}: {episode.title}
+                          Episode {fav.episodeIndex + 1}: {fav.title}
                         </p>
 
                         <img
@@ -83,7 +73,7 @@ export default function FavouriteEpisode() {
                           }}
                         />
                       </div>
-                      <p className="fav-ep-desc">{episode.description}</p>
+                      <p className="fav-ep-desc">{fav.description}</p>
                       <div className="fav-ep-meta">
                         <span>
                           Added on {fav.addedDate || new Date().toLocaleString()}
