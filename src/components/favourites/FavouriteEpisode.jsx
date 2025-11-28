@@ -2,6 +2,7 @@ import { usePodcast } from "../../context/PodcastContext";
 import "../../styles/FavouriteEpisode.css";
 import heartFilled from "../../assets/heart-fill.png";
 import heartOutline from "../../assets/heart.png";
+import LoadingState from "../LoadingState";
 
 export default function FavouriteEpisode() {
   const {
@@ -14,6 +15,9 @@ export default function FavouriteEpisode() {
     podcasts
   } = usePodcast();
 
+    if(!favourites) return <LoadingState />
+    if (!favourites || favourites.length === 0) return <p>No favourites yet.</p>;
+    
   // Group favourites by podcast
   const favouritesByPodcast = favourites.reduce((acc, fav) => {
     const podcastId = fav.podcastId || "unknown";
@@ -25,11 +29,11 @@ export default function FavouriteEpisode() {
   return (
     <section className="fav-list-container">
       {Object.entries(favouritesByPodcast).map(([podcastId, favs]) => {
-        const podcastTitle = podcasts[podcastId]?.title || "Unknown Podcast";
-
+        const show = podcasts?.find(p => p?.id === id) || { title: "Unknown Podcast" };
+        console.log(show)
         return (
           <div key={podcastId} className="fav-podcast-group">
-            <h2>{podcastTitle}</h2>
+            <h2>{show.title}</h2>
             <div className="fav-list">
               {favs.map((fav, index) => {
                 const season = seasons[fav.season];
@@ -51,7 +55,7 @@ export default function FavouriteEpisode() {
                 };
 
                 return (
-
+                     
                   <div
                     className="fav-ep-clm"
                     key={index}
@@ -67,7 +71,7 @@ export default function FavouriteEpisode() {
                         <p className="fav-ep-title">
                           Episode {episode.episode}: {episode.title}
                         </p>
-                        
+
                         <img
                           className="heart-icon"
                           src={isFaved ? heartFilled : heartOutline}

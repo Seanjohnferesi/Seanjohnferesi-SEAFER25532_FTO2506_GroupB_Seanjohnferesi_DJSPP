@@ -76,6 +76,7 @@ export default function ShowDetail() {
             const res = await fetch(`https://podcast-api.netlify.app/id/${show.id}`, { signal });
             const data = await res.json();
             setSeasons(data.seasons || []);
+              console.log("Fetched seasons:", data.seasons); // ← log here
         } catch (err) {
             if (err.name === "AbortError") return;
         }
@@ -91,6 +92,7 @@ export default function ShowDetail() {
     if (loading) return <LoadingState />;
     if (error) return <p>{error}</p>;
     if (!show) return <p>Show not found</p>;
+
 
     return (
         <>
