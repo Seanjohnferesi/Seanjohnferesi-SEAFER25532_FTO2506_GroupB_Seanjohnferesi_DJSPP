@@ -9,26 +9,31 @@
     justify-content: space-between;
 }
 
-.fav-list {
-     display: flex;
+.fav-episode-details {
+    display: flex;
     flex-direction: column;
+    flex: 1;
+}
+
+.fav-list {
+    display: flex;
+    flex-wrap: wrap;
     gap: 15px;
 }
 
-.wrapper{
-    width: 100%;
+.wrapper {
+    flex: 1 1 calc(33.333% - 10px);
+    min-width: 250px;
     background-color: var(--episode-inner-shadow);
-    display: flex;
-    gap: 15px;
     padding: 14px 18px;
     border-radius: 8px;
     box-shadow: 0 0 1px 1px var(--episode-shadow);
-    position: relative;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row; /* horizontal layout for image + details */
+    gap: 15px;
 }
+
 
 .fav-ep-clm {
     flex: 1 1 calc(33% - 15px); /* 3 items per row */
@@ -36,6 +41,11 @@
     display: flex;
     gap: 10px;
     align-items: flex-start;
+    cursor: pointer;
+    box-shadow: 0 0 1px 1px var(--episode-shadow);
+    padding: 8px 16px;
+    border-radius: 8px;
+    position: relative;
 }
 
 .fav-title-heart {
@@ -87,4 +97,10 @@
 
 .fav-ep-meta > span:nth-last-of-type(2) {
     font-size: 1rem;
+}
+
+.heart-icon{
+    position: absolute;
+    top: 10;
+    right: 10;
 }

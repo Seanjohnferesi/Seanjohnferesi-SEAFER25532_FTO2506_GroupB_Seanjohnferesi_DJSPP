@@ -14,7 +14,6 @@ export default function Favourites(){
             <p>Your saved episodes from all shows</p>
             <Filter />
             <FavouriteEpisode />
-            <DarkMode />
         </section>
     )
 }
