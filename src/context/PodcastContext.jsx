@@ -26,32 +26,45 @@ export function Podcast({ children }) {
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 
     // --- Favourite Episode --- 
-    const [favourites, setFavourites] = useState([])
+    const [favourites, setFavourites] = useState(() => {
+        const stored = localStorage.getItem("favourites");
+        return stored ? JSON.parse(stored) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("favourites", JSON.stringify(favourites));
+    }, [favourites]);
+
+
 
     const toggleFavourite = (episode) => {
     setFavourites(prev => {
-        // Check if this episode is already in favourites
         const exists = prev.find(
             item => item.season === episode.season && item.episodeIndex === episode.episodeIndex
         );
 
+        let newFavourites;
+
         if (exists) {
-            // If it exists, remove it from favourites
-            return prev.filter(
+            newFavourites = prev.filter(
                 item => !(item.season === episode.season && item.episodeIndex === episode.episodeIndex)
             );
         } else {
-            // If it doesn’t exist, add it to favourites with the current date/time
-            return [
+            newFavourites = [
                 ...prev, 
                 {
                     ...episode,
-                    addedDate: new Date().toLocaleString() // stores current date & time
+                    postcardId: selectedPodcast,
+                    addedDate: new Date().toLocaleString()
                 }
             ];
         }
+
+        console.log("Updated favourites:", newFavourites); // ← log the new state
+        return newFavourites;
     });
 };
+
 
 
     // --- Audio player state ---
@@ -143,7 +156,7 @@ export function Podcast({ children }) {
             handlePlay, handleNext, handlePrev,
             handleTimeUpdate, handleDuration, formatTime,
             currentEpisodeFile,
-            favourites, setFavourites, toggleFavourite
+            favourites, setFavourites, toggleFavourite,
         }}>
             {children}
         </PodcastContext.Provider>

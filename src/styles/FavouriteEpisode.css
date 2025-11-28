@@ -3,7 +3,19 @@
     color: var(--color-headings);
 }
 
-.fav-list-container {
+
+.fav-episode-details > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fav-list {
+     display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.wrapper{
     width: 100%;
     background-color: var(--episode-inner-shadow);
     display: flex;
@@ -13,32 +25,33 @@
     box-shadow: 0 0 1px 1px var(--episode-shadow);
     position: relative;
     cursor: pointer;
-}
-
-.fav-episode-details > div {
-    display: flex;
-    justify-content: space-between;
-}
-
-.fav-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .fav-ep-clm {
+    flex: 1 1 calc(33% - 15px); /* 3 items per row */
+    min-width: 250px;
     display: flex;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
+    gap: 10px;
+    align-items: flex-start;
 }
 
-.fav-ep-clm > img {
+.fav-title-heart {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.episode-image {
     width: 70px;
     height: 70px;
     border-radius: 8px;
+    object-fit: cover;
 }
+
 
 .fav-ep-title {
     margin: 0;
