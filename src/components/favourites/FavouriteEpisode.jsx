@@ -29,11 +29,10 @@ export default function FavouriteEpisode() {
   return (
     <section className="fav-list-container">
       {Object.entries(favouritesByPodcast).map(([podcastId, favs]) => {
-        const show = podcasts?.find(p => p?.id === id) || { title: "Unknown Podcast" };
-        console.log(show)
+        const podcastTitle = podcasts[podcastId]?.title || "Unknown Podcast";
         return (
           <div key={podcastId} className="fav-podcast-group">
-            <h2>{show.title}</h2>
+            <h2>{podcastTitle}</h2>
             <div className="fav-list">
               {favs.map((fav, index) => {
                 const season = seasons[fav.season];
