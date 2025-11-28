@@ -214,6 +214,7 @@ export default function ShowDetail() {
                                                     season: selectedSeason,
                                                     episodeIndex: index,
                                                     image: ep.image,
+                                                    podcastId: show.id
                                                     
                                                 });
                                                 }}

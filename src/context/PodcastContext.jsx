@@ -54,14 +54,19 @@ export function Podcast({ children }) {
 
         if (exists) {
             newFavourites = prev.filter(
-                item => !(item.season === episode.season && item.episodeIndex === episode.episodeIndex)
+               item =>
+                !(
+                    item.podcastId === episode.podcastId &&
+                    item.season === episode.season &&
+                    item.episodeIndex === episode.episodeIndex
+                )
             );
         } else {
             newFavourites = [
                 ...prev, 
                 {
                     ...episode,
-                    postcardId: selectedPodcast,
+                    podcastId: episode.podcastId,
                     addedDate: new Date().toLocaleString()
                 }
             ];

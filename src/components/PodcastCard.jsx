@@ -34,7 +34,10 @@ export default function PodcastCard({podcast}) {
                     alt="Favourite"
                     onClick={(e) => {
                     e.stopPropagation(); // prevent auto-play on heart click
-                    toggleFavourite(podcast);
+                    toggleFavourite({
+                        ...podcast,
+                        podcastId: podcast.id
+                    });
                     }}
                 />
             </div>
