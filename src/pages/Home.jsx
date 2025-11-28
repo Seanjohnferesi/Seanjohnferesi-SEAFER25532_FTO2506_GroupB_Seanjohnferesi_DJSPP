@@ -76,7 +76,6 @@ const fetchPodcasts = useCallback(async (signal) => {
 
     return (
         <main className="app-root">
-                <Navigator />
                 <Carousel />
                 <Filter/>
 

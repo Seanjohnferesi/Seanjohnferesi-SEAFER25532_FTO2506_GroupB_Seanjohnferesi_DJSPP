@@ -189,7 +189,9 @@ export default function ShowDetail() {
                             <div className="season-list">
                                 {currentSeason?.episodes.map((ep, index) => {
                                    const isFaved = favourites.some(
-                                        f => f.season === selectedSeason && f.episodeIndex === index
+                                        f => f.podcastId === show.id && 
+                                            f.season === selectedSeason 
+                                            && f.episodeIndex === index
                                     );
                                     
 
