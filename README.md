@@ -1,4 +1,4 @@
-# Podcast App – Today’s Updates
+# Podcast App
 
 ## Overview
 
