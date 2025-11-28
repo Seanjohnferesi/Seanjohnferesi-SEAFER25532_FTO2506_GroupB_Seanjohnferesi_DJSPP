@@ -78,6 +78,19 @@ export function Podcast({ children }) {
 };
 
 
+const [playbackState, setPlaybackState] = useState({}); 
+
+const setEpisode = (podcastId, season, trackIndex) => {
+    setPlaybackState(prev => ({
+        ...prev,
+        [podcastId]: { season, trackIndex }
+    }));
+};
+
+const getEpisode = (podcastId) => playbackState[podcastId] || { season: 0, trackIndex: 0 };
+
+
+
 
     // --- Audio player state ---
     const musicPlayer = useRef(null);
@@ -172,6 +185,7 @@ export function Podcast({ children }) {
             handleTimeUpdate, handleDuration, formatTime,
             currentEpisodeFile,
             favourites, setFavourites, toggleFavourite,
+            setEpisode,getEpisode,playbackState
         }}>
             {children}
         </PodcastContext.Provider>
